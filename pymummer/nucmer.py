@@ -16,7 +16,9 @@ class Runner:
       min_length=None,
       breaklen=None,
       coords_header=True,
-      maxmatch=False
+      maxmatch=False,
+      show_snps=False,
+      snps_header=True,
    ):
         self.qry = query
         self.ref = ref
@@ -26,6 +28,8 @@ class Runner:
         self.breaklen = breaklen
         self.coords_header = coords_header
         self.maxmatch = maxmatch
+        self.show_snps = show_snps
+        self.snps_header = snps_header
     
 
 
@@ -58,6 +62,15 @@ class Runner:
         command = 'show-coords -dTlro'
 
         if not self.coords_header:
+            command += ' -H'
+
+        return command + ' ' + infile + ' > ' + outfile
+
+
+    def _show_snps_command(self, infile, outfile):
+        command = 'show-snps -TClr'
+
+        if not self.snps_header:
             command += ' -H'
 
         return command + ' ' + infile + ' > ' + outfile

@@ -44,6 +44,18 @@ class TestRunner(unittest.TestCase):
             self.assertEqual(l[0]._show_coords_command('infile', 'outfile'), l[1])
 
 
+    def test_show_snps_command(self):
+        '''test _show_snps_command'''
+        tests = [
+            [nucmer.Runner('ref', 'qry', 'outfile', snps_header=False), 'show-snps -TClr -H infile > outfile'],
+            [nucmer.Runner('ref', 'qry', 'outfile'), 'show-snps -TClr infile > outfile']
+        ]
+
+        for l in tests:
+            self.assertEqual(l[0]._show_snps_command('infile', 'outfile'), l[1])
+        
+
+
     def test_write_script(self):
        '''test _write_script'''
        tmp_script = 'tmp.script.sh'
