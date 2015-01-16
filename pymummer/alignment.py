@@ -68,6 +68,7 @@ class Alignment:
 
 
     def __str__(self):
+        '''Returns a tab delimited string containing the values of this alignment object'''
         return '\t'.join(str(x) for x in
             [self.ref_start + 1,
             self.ref_end + 1,
