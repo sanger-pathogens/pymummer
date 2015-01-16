@@ -81,6 +81,8 @@ class Runner:
         print(self._nucmer_command(ref, qry, 'p'), file=f)
         print(self._delta_filter_command('p.delta', 'p.delta.filter'), file=f)
         print(self._show_coords_command('p.delta.filter', outfile), file=f)
+        if self.show_snps:
+            print(self._show_snps_command('p.delta.filter', outfile + '.snps'), file=f)
         fastaq.utils.close(f)
     
 

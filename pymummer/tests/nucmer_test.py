@@ -53,15 +53,24 @@ class TestRunner(unittest.TestCase):
 
         for l in tests:
             self.assertEqual(l[0]._show_snps_command('infile', 'outfile'), l[1])
-        
 
 
-    def test_write_script(self):
-       '''test _write_script'''
+    def test_write_script_no_snps(self):
+       '''test _write_script no snps'''
        tmp_script = 'tmp.script.sh'
        r = nucmer.Runner('ref', 'qry', 'outfile')
        r._write_script(tmp_script, 'ref', 'qry', 'outfile')
-       expected = os.path.join(data_dir, 'nucmer_test_write_script.sh')
+       expected = os.path.join(data_dir, 'nucmer_test_write_script_no_snps.sh')
+       self.assertTrue(filecmp.cmp(expected, tmp_script, shallow=False))
+       os.unlink(tmp_script)
+
+
+    def test_write_script_with_snps(self):
+       '''test _write_script with snps'''
+       tmp_script = 'tmp.script.sh'
+       r = nucmer.Runner('ref', 'qry', 'outfile', show_snps='outfile.snps')
+       r._write_script(tmp_script, 'ref', 'qry', 'outfile')
+       expected = os.path.join(data_dir, 'nucmer_test_write_script_with_snps.sh')
        self.assertTrue(filecmp.cmp(expected, tmp_script, shallow=False))
        os.unlink(tmp_script)
 
@@ -71,10 +80,12 @@ class TestRunner(unittest.TestCase):
         qry = os.path.join(data_dir, 'nucmer_test_qry.fa')
         ref = os.path.join(data_dir, 'nucmer_test_ref.fa')
         tmp_out = 'tmp.nucmer.out'
-        runner = nucmer.Runner(ref, qry, tmp_out, coords_header=False)
+        runner = nucmer.Runner(ref, qry, tmp_out, coords_header=False, show_snps=True, snps_header=False)
         runner.run()
         expected = os.path.join(data_dir, 'nucmer_test_out.coords')
         self.assertTrue(filecmp.cmp(tmp_out, expected, shallow=False))
+        self.assertTrue(filecmp.cmp(tmp_out + '.snps', expected + '.snps', shallow=False))
         os.unlink(tmp_out)
+        os.unlink(tmp_out + '.snps')
         
 
