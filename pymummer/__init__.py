@@ -2,7 +2,8 @@ __all__ = [
     'alignment',
     'coords_file',
     'nucmer',
-    'snp'
+    'snp',
+    'variant',
 ]
 
 from pymummer import *
