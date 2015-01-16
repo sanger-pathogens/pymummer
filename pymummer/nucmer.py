@@ -7,6 +7,7 @@ class Error (Exception): pass
 
 
 class Runner:
+    '''Handy reference for all the arguments needed for nucmer, delta-filter, show-coords, show-snps'''
     def __init__(
       self,
       ref,
@@ -30,6 +31,7 @@ class Runner:
 
 
     def _nucmer_command(self, ref, qry, outprefix):
+        '''Construct the nucmer command'''
         command = 'nucmer -p ' + outprefix
 
         if self.breaklen is not None:
@@ -43,6 +45,7 @@ class Runner:
 
 
     def _delta_filter_command(self, infile, outfile):
+        '''Construct delta-filter command'''
         command = 'delta-filter'
 
         if self.min_id is not None:
@@ -55,6 +58,7 @@ class Runner:
         
 
     def _show_coords_command(self, infile, outfile):
+        '''Construct show-coords command'''
         command = 'show-coords -dTlro'
 
         if not self.coords_header:
@@ -64,6 +68,7 @@ class Runner:
 
 
     def _write_script(self, script_name, ref, qry, outfile):
+        '''Write commands into a bash script'''
         f = fastaq.utils.open_file_write(script_name)
         print(self._nucmer_command(ref, qry, 'p'), file=f)
         print(self._delta_filter_command('p.delta', 'p.delta.filter'), file=f)
@@ -72,6 +77,12 @@ class Runner:
     
 
     def run(self):
+        '''
+        Change to a temp directory
+        Run bash script containing commands
+        Place results in specified output file
+        Clean up temp directory
+        '''
         qry = os.path.abspath(self.qry)
         ref = os.path.abspath(self.ref)
         outfile = os.path.abspath(self.outfile)
