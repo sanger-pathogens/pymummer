@@ -1,2 +1,2 @@
-__all__ = ['mummer']
+__all__ = ['alignment', 'coords_file', 'nucmer']
 from pymummer import *
