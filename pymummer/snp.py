@@ -19,6 +19,10 @@ class Snp:
             raise Error('Error constructing pymummer.snp.Snp from mummer show-snps output at this line:\n' + line)
 
 
+    def __eq__(self, other):
+        return type(other) is type(self) and self.__dict__ == other.__dict__
+
+
     def __str__(self):
         return '\t'.join([str(x) for x in [
             self.ref_pos + 1,

@@ -1,0 +1,7 @@
+/path/to/ref.fa /path/to/qry.fa
+NUCMER
+
+[P1]	[SUB]	[SUB]	[P2]	[BUFF]	[DIST]	[LEN R]	[LEN Q]	[FRM]	[TAGS]
+133	G	.	122	1	122	500	489	1	1	ref	qry
+143	.	C	131	1	132	500	489	1	1	ref	qry
+253	T	A	242	120	242	500	489	1	1	ref	qry
