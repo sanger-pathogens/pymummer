@@ -57,7 +57,7 @@ class Variant:
             self.qry_base
         ])
 
-    def _update_indel(self, nucmer_snp):
+    def update_indel(self, nucmer_snp):
         '''Indels are reported over multiple lines, 1 base insertion or deletion per line. This method extends the current variant by 1 base if it's an indel and adjacent to the new SNP and returns True. If the current variant is a SNP, does nothing and returns False'''
         new_variant = Variant(nucmer_snp)
         if self.var_type not in [INS, DEL] \

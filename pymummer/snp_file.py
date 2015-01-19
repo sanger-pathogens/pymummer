@@ -1,5 +1,5 @@
 import fastaq
-from pymummer import snp
+from pymummer import snp, variant
 
 def reader(fname):
     f = fastaq.utils.open_file_read(fname)
@@ -11,4 +11,14 @@ def reader(fname):
         yield snp.Snp(line)
 
     fastaq.utils.close(f)
+
+
+def get_all_variants(fname):
+    variants = []
+    fr = reader(fname)
+    for nucmer_snp in fr:
+        if len(variants) == 0 or not variants[-1].update_indel(nucmer_snp):
+            variants.append(variant.Variant(nucmer_snp))
+
+    return variants
 

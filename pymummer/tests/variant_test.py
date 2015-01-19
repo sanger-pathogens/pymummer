@@ -23,7 +23,7 @@ class TestVariant(unittest.TestCase):
 
 
     def test_update_indel_no_change(self):
-        '''Test _update_indel does nothing in the right cases'''
+        '''Test update_indel does nothing in the right cases'''
         initial_vars = [
             snp.Snp('\t'.join(['42', 'A', 'C', '100', 'x', 'x', '300', '400', 'x', 'x', 'ref', 'qry'])),
             snp.Snp('\t'.join(['42', 'A', 'C', '100', 'x', 'x', '300', '400', 'x', 'x', 'ref', 'qry'])),
@@ -59,11 +59,11 @@ class TestVariant(unittest.TestCase):
         for i in range(len(initial_vars)):
             var = variant.Variant(initial_vars[i])
             var_original = copy.copy(var)
-            self.assertFalse(var._update_indel(to_add[i]))
+            self.assertFalse(var.update_indel(to_add[i]))
             self.assertEqual(var, var_original)
 
     def test_update_indel_insertion(self):
-        '''Test _update_indel extends insertions correctly'''
+        '''Test update_indel extends insertions correctly'''
         insertion = variant.Variant(snp.Snp('\t'.join(['42', '.', 'A', '100', 'x', 'x', '300', '400', 'x', 'x', 'ref', 'qry'])))
         to_add = snp.Snp('\t'.join(['42', '.', 'C', '101', 'x', 'x', '300', '400', 'x', 'x', 'ref', 'qry']))
         expected = copy.copy(insertion)
@@ -78,12 +78,12 @@ class TestVariant(unittest.TestCase):
         expected.qry_length = 400
         expected.qry_name = 'qry'
         expected.qry_base = 'AC'
-        self.assertTrue(insertion._update_indel(to_add))
+        self.assertTrue(insertion.update_indel(to_add))
         self.assertEqual(expected, insertion)
 
 
     def test_update_indel_deletion(self):
-        '''Test _update_indel extends deletions correctly'''
+        '''Test update_indel extends deletions correctly'''
         deletion = variant.Variant(snp.Snp('\t'.join(['42', 'A', '.', '100', 'x', 'x', '300', '400', 'x', 'x', 'ref', 'qry'])))
         to_add = snp.Snp('\t'.join(['43', 'C', '.', '100', 'x', 'x', '300', '400', 'x', 'x', 'ref', 'qry']))
         expected = copy.copy(deletion)
@@ -98,6 +98,6 @@ class TestVariant(unittest.TestCase):
         expected.qry_length = 400
         expected.qry_name = 'qry'
         expected.qry_base = '.'
-        self.assertTrue(deletion._update_indel(to_add))
+        self.assertTrue(deletion.update_indel(to_add))
         self.assertEqual(expected, deletion)
 
