@@ -17,7 +17,9 @@ class Runner:
       min_length=None,
       breaklen=None,
       coords_header=True,
-      maxmatch=False
+      maxmatch=False,
+      show_snps=False,
+      snps_header=True,
    ):
         self.qry = query
         self.ref = ref
@@ -27,6 +29,8 @@ class Runner:
         self.breaklen = breaklen
         self.coords_header = coords_header
         self.maxmatch = maxmatch
+        self.show_snps = show_snps
+        self.snps_header = snps_header
     
 
 
@@ -67,12 +71,23 @@ class Runner:
         return command + ' ' + infile + ' > ' + outfile
 
 
+    def _show_snps_command(self, infile, outfile):
+        command = 'show-snps -TClr'
+
+        if not self.snps_header:
+            command += ' -H'
+
+        return command + ' ' + infile + ' > ' + outfile
+
+
     def _write_script(self, script_name, ref, qry, outfile):
         '''Write commands into a bash script'''
         f = fastaq.utils.open_file_write(script_name)
         print(self._nucmer_command(ref, qry, 'p'), file=f)
         print(self._delta_filter_command('p.delta', 'p.delta.filter'), file=f)
         print(self._show_coords_command('p.delta.filter', outfile), file=f)
+        if self.show_snps:
+            print(self._show_snps_command('p.delta.filter', outfile + '.snps'), file=f)
         fastaq.utils.close(f)
     
 
