@@ -3,6 +3,7 @@ __all__ = [
     'coords_file',
     'nucmer',
     'snp',
+    'snp_file',
     'variant',
 ]
 
