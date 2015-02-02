@@ -1,21 +1,44 @@
 import os
 import glob
+import shutil
+import sys
 from setuptools import setup, find_packages
 
-def read(fname):
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+
+required_progs = ['nucmer', 'show-coords', 'show-snps', 'delta-filter']
+found_all_progs = True
+print('Checking MUMmer programs found in path:')
+
+for program in required_progs:
+    if shutil.which(program) is None:
+        found_all_progs = False
+        found = '   NOT FOUND'
+    else:
+        found = '          OK'
+
+    print(found, program, sep='\t')
+
+
+if not found_all_progs:
+    print('Cannot install because some programs from the MUMer package not found.', file=sys.stderr)
+    sys.exit(1)
+
 
 setup(
     name='pymummer',
-    version='0.0.1',
+    version='0.0.2',
     description='Wrapper for MUMmer',
-    long_description=read('README.md'),
     packages = find_packages(),
     author='Martin Hunt, Nishadi De Silva',
     author_email='path-help@sanger.ac.uk',
     url='https://github.com/sanger-pathogens/pymummer',
     test_suite='nose.collector',
-    install_requires=['nose >= 1.3', 'fastaq >= 2.0.0'],
-    dependency_links=['http://github.com/sanger-pathogens/fastaq/tarball/master#egg=fastaq-2.0.0'],
+    install_requires=['nose >= 1.3', 'pyfastaq >= 3.0.1'],
     license='GPLv3',
+    classifiers=[
+        'Development Status :: 4 - Beta',
+        'Topic :: Scientific/Engineering :: Bio-Informatics',
+        'Programming Language :: Python :: 3 :: Only',
+        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
+    ],
 )

@@ -1,6 +1,6 @@
 import unittest
 import os
-import fastaq
+import pyfastaq
 from pymummer import alignment
 
 modules_dir = os.path.dirname(os.path.abspath(alignment.__file__))
@@ -25,7 +25,7 @@ class TestNucmer(unittest.TestCase):
         ]
         for h in hits:
             a = alignment.Alignment(h)
-            self.assertEqual(fastaq.intervals.Interval(0,99), a.qry_coords())
+            self.assertEqual(pyfastaq.intervals.Interval(0,99), a.qry_coords())
 
 
     def test_ref_coords(self):
@@ -35,7 +35,7 @@ class TestNucmer(unittest.TestCase):
         ]
         for h in hits:
             a = alignment.Alignment(h)
-            self.assertEqual(fastaq.intervals.Interval(0,99), a.ref_coords())
+            self.assertEqual(pyfastaq.intervals.Interval(0,99), a.ref_coords())
 
 
     def test_on_same_strand(self):

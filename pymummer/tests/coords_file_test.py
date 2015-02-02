@@ -1,6 +1,5 @@
 import unittest
 import os
-import fastaq
 from pymummer import coords_file, alignment
 
 modules_dir = os.path.dirname(os.path.abspath(coords_file.__file__))

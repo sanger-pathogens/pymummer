@@ -1,6 +1,5 @@
 import unittest
 import os
-import fastaq
 from pymummer import snp_file, snp, variant
 
 modules_dir = os.path.dirname(os.path.abspath(snp_file.__file__))
