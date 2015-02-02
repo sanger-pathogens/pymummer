@@ -4,6 +4,7 @@ __all__ = [
     'nucmer',
     'snp',
     'snp_file',
+    'syscall',
     'variant',
 ]
 
