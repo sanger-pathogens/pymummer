@@ -2,6 +2,7 @@ import os
 import tempfile
 import shutil
 import fastaq
+from pymummer import syscall
 
 class Error (Exception): pass
 
@@ -20,6 +21,7 @@ class Runner:
       maxmatch=False,
       show_snps=False,
       snps_header=True,
+      verbose=False,
    ):
         self.qry = query
         self.ref = ref
@@ -31,6 +33,7 @@ class Runner:
         self.maxmatch = maxmatch
         self.show_snps = show_snps
         self.snps_header = snps_header
+        self.verbose = verbose
     
 
 
@@ -106,7 +109,7 @@ class Runner:
         os.chdir(tmpdir)
         script = 'run_nucmer.sh'
         self._write_script(script, ref, qry, outfile) 
-        fastaq.utils.syscall('bash ' + script)
+        syscall.run('bash ' + script, verbose=self.verbose)
         os.chdir(original_dir)
         shutil.rmtree(tmpdir)
 
