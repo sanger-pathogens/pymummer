@@ -1,8 +1,8 @@
-import fastaq
+import pyfastaq
 from pymummer import snp, variant
 
 def reader(fname):
-    f = fastaq.utils.open_file_read(fname)
+    f = pyfastaq.utils.open_file_read(fname)
 
     for line in f:
         if line.startswith('[') or (not '\t' in line):
@@ -10,7 +10,7 @@ def reader(fname):
 
         yield snp.Snp(line)
 
-    fastaq.utils.close(f)
+    pyfastaq.utils.close(f)
 
 
 def get_all_variants(fname):

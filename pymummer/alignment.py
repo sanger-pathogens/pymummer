@@ -1,4 +1,4 @@
-import fastaq
+import pyfastaq
 
 class Error (Exception): pass
 
@@ -45,13 +45,13 @@ class Alignment:
 
 
     def qry_coords(self):
-        '''Returns a fastaq.intervals.Interval object of the start and end coordinates in the query sequence'''
-        return fastaq.intervals.Interval(min(self.qry_start, self.qry_end), max(self.qry_start, self.qry_end))
+        '''Returns a pyfastaq.intervals.Interval object of the start and end coordinates in the query sequence'''
+        return pyfastaq.intervals.Interval(min(self.qry_start, self.qry_end), max(self.qry_start, self.qry_end))
 
 
     def ref_coords(self):
-        '''Returns a fastaq.intervals.Interval object of the start and end coordinates in the reference sequence'''
-        return fastaq.intervals.Interval(min(self.ref_start, self.ref_end), max(self.ref_start, self.ref_end))
+        '''Returns a pyfastaq.intervals.Interval object of the start and end coordinates in the reference sequence'''
+        return pyfastaq.intervals.Interval(min(self.ref_start, self.ref_end), max(self.ref_start, self.ref_end))
 
 
     def on_same_strand(self):

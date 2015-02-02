@@ -1,7 +1,6 @@
 import unittest
 import os
 import filecmp
-import fastaq
 from pymummer import nucmer
 
 modules_dir = os.path.dirname(os.path.abspath(nucmer.__file__))
