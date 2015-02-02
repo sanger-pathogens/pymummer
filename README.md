@@ -8,41 +8,15 @@ Installation
 
 ###Pre-requisites###
 
-__1.	MUMmer__
-
+The MUMmer package must be installed.
 Instructions to install MUMmer can be found [here](http://mummer.sourceforge.net/manual/#installation)
     
-__2.	nose__
-	
-Install using your chosen method of installing python modules. Some instructions [here](https://nose.readthedocs.org/en/latest/). We used pip
-	
-	pip3 install nose
-
-__3.	fastaq__ 
-	
-Fastaq is a python3 module to manipulate FASTA and FASTQ files. 
-
-Download it from [github](https://github.com/sanger-pathogens/Fastaq/releases) and unzip it
-	
-Run the tests (needs nose): 
-	
-	python3 setup.py test
-		
-Install: 
-	
-	python3 setup.py install
 		
 ###Installation###
 
-Download code (update once release created)
-		
-Run the tests (needs nose): 
-	
-	python3 setup.py test
-		
-Install: 
-	
-	python3 setup.py install
+Install with
+
+    pip3 install pymummer
 
 
 Usage (for developers)
