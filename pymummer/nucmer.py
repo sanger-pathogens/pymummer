@@ -19,6 +19,7 @@ class Runner:
       breaklen=None,
       coords_header=True,
       maxmatch=False,
+      simplify=True,
       show_snps=False,
       snps_header=True,
       verbose=False,
@@ -31,6 +32,7 @@ class Runner:
         self.breaklen = breaklen
         self.coords_header = coords_header
         self.maxmatch = maxmatch
+        self.simplify = simplify
         self.show_snps = show_snps
         self.snps_header = snps_header
         self.verbose = verbose
@@ -46,6 +48,9 @@ class Runner:
 
         if self.maxmatch:
             command += ' --maxmatch'
+            
+        if not self.simplify:
+        	command += ' --nosimplify'
 
         return command + ' ' + ref + ' ' + qry
 

@@ -13,7 +13,8 @@ class TestRunner(unittest.TestCase):
         tests = [
             [nucmer.Runner('ref', 'qry', 'outfile'), 'nucmer -p pre ref qry'],
             [nucmer.Runner('ref', 'qry', 'outfile', breaklen=42), 'nucmer -p pre -b 42 ref qry'],
-            [nucmer.Runner('ref', 'qry', 'outfile', maxmatch=True), 'nucmer -p pre --maxmatch ref qry']
+            [nucmer.Runner('ref', 'qry', 'outfile', maxmatch=True), 'nucmer -p pre --maxmatch ref qry'],
+            [nucmer.Runner('ref', 'qry', 'outfile', simplify=False), 'nucmer -p pre --nosimplify ref qry']
         ]
 
         for l in tests:
