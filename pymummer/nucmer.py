@@ -23,6 +23,7 @@ class Runner:
       show_snps=False,
       snps_header=True,
       verbose=False,
+      promer=False,
    ):
         self.qry = query
         self.ref = ref
@@ -36,12 +37,18 @@ class Runner:
         self.show_snps = show_snps
         self.snps_header = snps_header
         self.verbose = verbose
+        self.use_promer = promer
     
 
 
     def _nucmer_command(self, ref, qry, outprefix):
         '''Construct the nucmer command'''
-        command = 'nucmer -p ' + outprefix
+        if self.use_promer:
+            command = 'promer'
+        else:
+            command = 'nucmer'
+  
+        command += ' -p ' + outprefix
 
         if self.breaklen is not None:
             command += ' -b ' + str(self.breaklen)
@@ -49,7 +56,7 @@ class Runner:
         if self.maxmatch:
             command += ' --maxmatch'
             
-        if not self.simplify:
+        if not self.simplify and not self.use_promer:
         	command += ' --nosimplify'
 
         return command + ' ' + ref + ' ' + qry
