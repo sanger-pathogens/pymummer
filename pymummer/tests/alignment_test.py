@@ -7,6 +7,43 @@ modules_dir = os.path.dirname(os.path.abspath(alignment.__file__))
 data_dir = os.path.join(modules_dir, 'tests', 'data')
 
 class TestNucmer(unittest.TestCase):
+    def test_init_nucmer(self):
+        '''test __init__ nucmer'''
+        line = '\t'.join(['1', '100', '2', '200', '101', '202', '42.42', '123', '456', '-1', '0', 'ref', 'qry', '[FOO]'])
+        a = alignment.Alignment(line)
+        self.assertEqual(a.ref_start, 0)
+        self.assertEqual(a.ref_end, 99)
+        self.assertEqual(a.qry_start, 1)
+        self.assertEqual(a.qry_end, 199)
+        self.assertEqual(a.hit_length_ref, 101)
+        self.assertEqual(a.hit_length_qry, 202)
+        self.assertEqual(a.percent_identity, 42.42)
+        self.assertEqual(a.ref_length, 123)
+        self.assertEqual(a.qry_length, 456)
+        self.assertEqual(a.frame, -1)
+        self.assertEqual(a.ref_name, 'ref')
+        self.assertEqual(a.qry_name, 'qry')
+
+
+    def test_init_promer(self):
+        '''test __init__ promer'''
+        line = '\t'.join(['1', '1398', '4891054', '4892445', '1398', '1392', '89.55', '93.18', '0.21', '1398', '5349013', '1', '1', 'ref', 'qry', '[CONTAINED]'])
+
+        a = alignment.Alignment(line)
+        self.assertEqual(a.ref_start, 0)
+        self.assertEqual(a.ref_end, 1397)
+        self.assertEqual(a.qry_start, 4891053)
+        self.assertEqual(a.qry_end, 4892444)
+        self.assertEqual(a.hit_length_ref, 1398)
+        self.assertEqual(a.hit_length_qry, 1392)
+        self.assertEqual(a.percent_identity, 89.55)
+        self.assertEqual(a.ref_length, 1398)
+        self.assertEqual(a.qry_length, 5349013)
+        self.assertEqual(a.frame, 1)
+        self.assertEqual(a.ref_name, 'ref')
+        self.assertEqual(a.qry_name, 'qry')
+
+
     def test_swap(self):
         ''' test swap'''
         l_in = ['1', '100', '2', '200', '101', '202', '42.42', '123', '456', '-1', '0', 'ref', 'qry']

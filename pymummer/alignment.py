@@ -5,24 +5,37 @@ class Error (Exception): pass
 class Alignment:
     def __init__(self, line):
         '''Constructs Alignment object from a line of show-coords -dTlro'''
+        # nucmer:
         # [S1]  [E1]    [S2]    [E2]    [LEN 1] [LEN 2] [% IDY] [LEN R] [LEN Q] [FRM]   [TAGS]
-        #1162    25768   24536   4   24607   24533   99.32   640851  24536   1   -1  MAL1    NODE_25757_length_24482_cov_18.920391   [CONTAINS]
+        #1162    25768   24536   4   24607   24533   99.32   640851  24536   1   -1  ref qry   [CONTAINS]
+
+        # promer:
+        #[S1]    [E1]    [S2]    [E2]    [LEN 1] [LEN 2] [% IDY] [% SIM] [% STP] [LEN R] [LEN Q] [FRM]   [TAGS]
+        # 1   1398    4891054 4892445 1398    1392    89.55   93.18   0.21    1398    5349013 1   1   ref qry    [CONTAINED]
+
+        fields = line.rstrip().split('\t')
 
         try:
-            l = line.rstrip().split('\t')
-            self.ref_start = int(l[0]) - 1
-            self.ref_end = int(l[1]) - 1
-            self.qry_start = int(l[2]) - 1
-            self.qry_end = int(l[3]) - 1
-            self.hit_length_ref = int(l[4])
-            self.hit_length_qry = int(l[5])
-            self.percent_identity = float(l[6])
-            self.ref_length = int(l[7])
-            self.qry_length = int(l[8])
-            self.frame = int(l[9])
-            self.ref_name = l[11]
-            self.qry_name = l[12]
+            self.ref_start = int(fields[0]) - 1
+            self.ref_end = int(fields[1]) - 1
+            self.qry_start = int(fields[2]) - 1
+            self.qry_end = int(fields[3]) - 1
+            self.hit_length_ref = int(fields[4])
+            self.hit_length_qry = int(fields[5])
+            self.percent_identity = float(fields[6])
 
+            if len(fields) >= 15:  # promer has more fields
+                self.ref_length = int(fields[9])
+                self.qry_length = int(fields[10])
+                self.frame = int(fields[11])
+                self.ref_name = fields[13]
+                self.qry_name = fields[14]
+            else:
+                self.ref_length = int(fields[7])
+                self.qry_length = int(fields[8])
+                self.frame = int(fields[9])
+                self.ref_name = fields[11]
+                self.qry_name = fields[12]
         except:
             raise Error('Error reading this nucmer line:\n' + line)
 
