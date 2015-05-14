@@ -97,6 +97,22 @@ class TestNucmer(unittest.TestCase):
             self.assertEqual(a.is_self_hit(), t[1])
 
 
+    def test_reverse_reference(self):
+        '''Test reverse_reference'''
+        aln = alignment.Alignment('\t'.join(['100', '142', '1', '42', '43', '42', '100.00', '150', '100', '1', '1', 'ref', 'qry']))
+        expected = alignment.Alignment('\t'.join(['51', '9', '1', '42', '43', '42', '100.00', '150', '100', '1', '1', 'ref', 'qry']))
+        aln.reverse_reference()
+        self.assertEqual(expected, aln)
+
+
+    def test_reverse_query(self):
+        '''Test reverse_query'''
+        aln = alignment.Alignment('\t'.join(['100', '142', '1', '42', '43', '42', '100.00', '150', '100', '1', '1', 'ref', 'qry']))
+        expected = alignment.Alignment('\t'.join(['100', '142', '100', '59', '43', '42', '100.00', '150', '100', '1', '1', 'ref', 'qry']))
+        aln.reverse_query()
+        self.assertEqual(expected, aln)
+
+
     def test_str(self):
         '''Test __str__'''
         l_in = ['1', '100', '2', '200', '101', '202', '42.42', '123', '456', '-1', '0', 'ref', 'qry']
