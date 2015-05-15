@@ -80,6 +80,18 @@ class Alignment:
                 and self.percent_identity == 100
 
 
+    def reverse_query(self):
+        '''Changes the coordinates as if the query sequence has been reverse complemented'''
+        self.qry_start = self.qry_length - self.qry_start - 1
+        self.qry_end = self.qry_length - self.qry_end - 1
+
+
+    def reverse_reference(self):
+        '''Changes the coordinates as if the reference sequence has been reverse complemented'''
+        self.ref_start = self.ref_length - self.ref_start - 1
+        self.ref_end = self.ref_length - self.ref_end - 1
+
+
     def __str__(self):
         '''Returns a tab delimited string containing the values of this alignment object'''
         return '\t'.join(str(x) for x in
