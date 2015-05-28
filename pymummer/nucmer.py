@@ -18,6 +18,7 @@ class Runner:
       min_length=None,
       breaklen=None,
       coords_header=True,
+      diagdiff=None,
       maxmatch=False,
       simplify=True,
       show_snps=False,
@@ -31,6 +32,7 @@ class Runner:
         self.min_id = min_id
         self.min_length = min_length
         self.breaklen = breaklen
+        self.diagdiff = diagdiff
         self.coords_header = coords_header
         self.maxmatch = maxmatch
         self.simplify = simplify
@@ -52,6 +54,9 @@ class Runner:
 
         if self.breaklen is not None:
             command += ' -b ' + str(self.breaklen)
+
+        if self.diagdiff is not None and not self.use_promer:
+            command += ' -D ' + str(self.diagdiff)
 
         if self.maxmatch:
             command += ' --maxmatch'
