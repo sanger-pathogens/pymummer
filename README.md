@@ -3,6 +3,8 @@ pymummer
 
 Python3 wrapper for running MUMmer and parsing the output. 
 
+[![Build Status](https://travis-ci.org/sanger-pathogens/pymummer.svg?branch=master)](https://travis-ci.org/sanger-pathogens/pymummer)
+
 Installation
 ------------
 
