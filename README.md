@@ -8,11 +8,17 @@ Python3 wrapper for running MUMmer and parsing the output.
 Installation
 ------------
 
+###Homebrew/LinuxBrew###
+```
+brew tap homebrew/python
+brew install pymummer
+```
+
+##Pip
 ###Pre-requisites###
 
 The MUMmer package must be installed.
 Instructions to install MUMmer can be found [here](http://mummer.sourceforge.net/manual/#installation)
-    
 		
 ###Installation###
 
