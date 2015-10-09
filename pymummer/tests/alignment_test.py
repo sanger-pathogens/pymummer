@@ -121,3 +121,11 @@ class TestNucmer(unittest.TestCase):
         a = alignment.Alignment('\t'.join(l_in))
         self.assertEqual(str(a), '\t'.join(l_out))
 
+
+    def test_to_msp_crunch(self):
+        '''Test to_msp_crunch'''
+        l_in = ['100', '110', '1', '10', '10', '11', '80.00', '123', '456', '-1', '0', 'ref', 'qry']
+        a = alignment.Alignment('\t'.join(l_in))
+        expected = '8 80.00 1 10 qry 100 110 ref'
+        self.assertEqual(expected, a.to_msp_crunch())
+
