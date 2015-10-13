@@ -33,7 +33,7 @@ setup(
     author_email='path-help@sanger.ac.uk',
     url='https://github.com/sanger-pathogens/pymummer',
     test_suite='nose.collector',
-    install_requires=['pyfastaq >= 3.0.1', 'numpy'],
+    install_requires=['pyfastaq >= 3.9.0', 'numpy'],
     tests_require=['nose >= 1.3'],
     license='GPLv3',
     classifiers=[
