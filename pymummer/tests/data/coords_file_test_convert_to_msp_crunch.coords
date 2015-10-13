@@ -1,0 +1,7 @@
+/Users/mh12/sanger-pathogens/pymummer/pymummer/tests/data/coords_file_test_convert_to_msp_crunch.ref.fa /Users/mh12/sanger-pathogens/pymummer/pymummer/tests/data/coords_file_test_convert_to_msp_crunch.qry.fa
+NUCMER
+
+[S1]	[E1]	[S2]	[E2]	[LEN 1]	[LEN 2]	[% IDY]	[LEN R]	[LEN Q]	[FRM]	[TAGS]
+1	420	1	420	420	420	99.76	420	420	1	1	ref1	qry1	[IDENTITY]
+1	480	1	479	480	479	99.58	480	479	1	1	ref2	qry2	[IDENTITY]
+61	420	1	360	360	360	99.44	500	360	1	1	ref3	qry3	[CONTAINS]
