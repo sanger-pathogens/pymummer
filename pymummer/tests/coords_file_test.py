@@ -41,6 +41,11 @@ class TestCoordsFile(unittest.TestCase):
         qry_fai = os.path.join(data_dir, 'coords_file_test_convert_to_msp_crunch.qry.fa.fai')
         expected = os.path.join(data_dir, 'coords_file_test_convert_to_msp_crunch.with_offset.crunch')
         tmpfile = 'tmp.test_convert_to_msp_crunch_with_offset.crunch'
+
+        with self.assertRaises(coords_file.Error):
+            coords_file.convert_to_msp_crunch(infile, tmpfile, ref_fai=ref_fai)
+            coords_file.convert_to_msp_crunch(infile, tmpfile, qry_fai=qry_fai)
+
         coords_file.convert_to_msp_crunch(infile, tmpfile, ref_fai=ref_fai, qry_fai=qry_fai)
         self.assertTrue(filecmp.cmp(expected, tmpfile, shallow=False))
         os.unlink(tmpfile)
