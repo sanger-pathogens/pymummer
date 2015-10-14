@@ -26,14 +26,14 @@ if not found_all_progs:
 
 setup(
     name='pymummer',
-    version='0.5.0',
+    version='0.6.0',
     description='Wrapper for MUMmer',
     packages = find_packages(),
     author='Martin Hunt, Nishadi De Silva',
     author_email='path-help@sanger.ac.uk',
     url='https://github.com/sanger-pathogens/pymummer',
     test_suite='nose.collector',
-    install_requires=['pyfastaq >= 3.0.1', 'numpy'],
+    install_requires=['pyfastaq >= 3.9.0', 'numpy'],
     tests_require=['nose >= 1.3'],
     license='GPLv3',
     classifiers=[

@@ -1,11 +1,12 @@
 import unittest
 import os
+import filecmp
 from pymummer import coords_file, alignment
 
 modules_dir = os.path.dirname(os.path.abspath(coords_file.__file__))
 data_dir = os.path.join(modules_dir, 'tests', 'data')
 
-class TestUtils(unittest.TestCase):
+class TestCoordsFile(unittest.TestCase):
     def test_coords_file(self):
         '''test coords_file'''
         expected = [
@@ -22,3 +23,29 @@ class TestUtils(unittest.TestCase):
             alignments = [x for x in fr]
             self.assertEqual(alignments, expected)
 
+
+    def test_convert_to_msp_crunch_no_offset(self):
+        '''Test convert_to_msp_crunch with no offsets'''
+        infile = os.path.join(data_dir, 'coords_file_test_convert_to_msp_crunch.coords')
+        expected = os.path.join(data_dir, 'coords_file_test_convert_to_msp_crunch.no_offset.crunch')
+        tmpfile = 'tmp.test_convert_to_msp_crunch_no_offset.crunch'
+        coords_file.convert_to_msp_crunch(infile, tmpfile)
+        self.assertTrue(filecmp.cmp(expected, tmpfile, shallow=False))
+        os.unlink(tmpfile)
+
+
+    def test_convert_to_msp_crunch_with_offset(self):
+        '''Test convert_to_msp_crunch with offsets'''
+        infile = os.path.join(data_dir, 'coords_file_test_convert_to_msp_crunch.coords')
+        ref_fai = os.path.join(data_dir, 'coords_file_test_convert_to_msp_crunch.ref.fa.fai')
+        qry_fai = os.path.join(data_dir, 'coords_file_test_convert_to_msp_crunch.qry.fa.fai')
+        expected = os.path.join(data_dir, 'coords_file_test_convert_to_msp_crunch.with_offset.crunch')
+        tmpfile = 'tmp.test_convert_to_msp_crunch_with_offset.crunch'
+
+        with self.assertRaises(coords_file.Error):
+            coords_file.convert_to_msp_crunch(infile, tmpfile, ref_fai=ref_fai)
+            coords_file.convert_to_msp_crunch(infile, tmpfile, qry_fai=qry_fai)
+
+        coords_file.convert_to_msp_crunch(infile, tmpfile, ref_fai=ref_fai, qry_fai=qry_fai)
+        self.assertTrue(filecmp.cmp(expected, tmpfile, shallow=False))
+        os.unlink(tmpfile)
