@@ -1,7 +1,7 @@
 import unittest
 import os
 import pyfastaq
-from pymummer import alignment
+from pymummer import alignment, snp, variant
 
 modules_dir = os.path.dirname(os.path.abspath(alignment.__file__))
 data_dir = os.path.join(modules_dir, 'tests', 'data')
@@ -128,4 +128,116 @@ class TestNucmer(unittest.TestCase):
         a = alignment.Alignment('\t'.join(l_in))
         expected = '8 80.00 1 10 qry 100 110 ref'
         self.assertEqual(expected, a.to_msp_crunch())
+
+
+    def test_qry_coords_from_ref_coord_test_bad_ref_coord(self):
+        '''Test qry_coords_from_ref_coord with bad ref coords'''
+        aln = alignment.Alignment('\t'.join(['100', '200', '1', '100', '100', '100', '100.00', '300', '300', '1', '1', 'ref', 'qry']))
+        with self.assertRaises(alignment.Error):
+            got = aln.qry_coords_from_ref_coord(98, [])
+
+        with self.assertRaises(alignment.Error):
+            got = aln.qry_coords_from_ref_coord(200, [])
+
+
+    def test_qry_coords_from_ref_coord_test_same_strand(self):
+        '''Test qry_coords_from_ref_coord on same strand'''
+        aln = alignment.Alignment('\t'.join(['100', '200', '1', '101', '100', '100', '100.00', '300', '300', '1', '1', 'ref', 'qry']))
+        snp0 = snp.Snp('\t'.join(['140', 'A', 'T', '40', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # snp
+        snp0 = variant.Variant(snp0)
+        snp1 = snp.Snp('\t'.join(['140', 'A', '.', '40', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # del from qry
+        snp2 = snp.Snp('\t'.join(['141', 'C', '.', '40', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # del from qry
+        del1 = variant.Variant(snp1)
+        del2 = variant.Variant(snp1)
+        self.assertTrue(del2.update_indel(snp2))
+        snp3 = snp.Snp('\t'.join(['150', '.', 'A', '50', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # del from ref
+        snp4 = snp.Snp('\t'.join(['150', '.', 'C', '51', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # del from ref
+        snp5 = snp.Snp('\t'.join(['150', '.', 'G', '52', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # del from ref
+        ins1 = variant.Variant(snp3)
+        ins2 = variant.Variant(snp3)
+        self.assertTrue(ins2.update_indel(snp4))
+        self.assertTrue(ins2.update_indel(snp5))
+
+        tests = [
+            (99, [], (0, False)),
+            (100, [], (1, False)),
+            (199, [], (100, False)),
+            (119, [del1], (20, False)),
+            (149, [], (50, False)),
+            (149, [del1], (49, False)),
+            (149, [del2], (48, False)),
+            (159, [], (60, False)),
+            (159, [ins1], (61, False)),
+            (159, [ins2], (63, False)),
+            (159, [del1, ins1], (60, False)),
+            (159, [del1, ins2], (62, False)),
+            (159, [del2, ins1], (59, False)),
+            (159, [del2, ins2], (61, False)),
+            (139, [del1], (39, True)),
+            (139, [snp0], (40, False)),
+            (149, [ins1], (49, True)),
+        ]
+
+        for ref_coord, variant_list, expected in tests:
+            got = aln.qry_coords_from_ref_coord(ref_coord, variant_list)
+            self.assertEqual(expected, got)
+            # if we reverse the direction of hit in query and reference, should get the same answer
+            aln.qry_start, aln.qry_end = aln.qry_end, aln.qry_start
+            aln.ref_start, aln.ref_end = aln.ref_end, aln.ref_start
+            got = aln.qry_coords_from_ref_coord(ref_coord, variant_list)
+            self.assertEqual(expected, got)
+            aln.qry_start, aln.qry_end = aln.qry_end, aln.qry_start
+            aln.ref_start, aln.ref_end = aln.ref_end, aln.ref_start
+
+
+    def test_qry_coords_from_ref_coord_test_different_strand(self):
+        '''Test qry_coords_from_ref_coord on different strand'''
+        aln = alignment.Alignment('\t'.join(['100', '200', '101', '1', '100', '100', '100.00', '300', '300', '1', '1', 'ref', 'qry']))
+        snp0 = snp.Snp('\t'.join(['140', 'A', 'T', '40', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # snp
+        snp0 = variant.Variant(snp0)
+        snp1 = snp.Snp('\t'.join(['140', 'A', '.', '40', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # del from qry
+        snp2 = snp.Snp('\t'.join(['141', 'C', '.', '40', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # del from qry
+        del1 = variant.Variant(snp1)
+        del2 = variant.Variant(snp1)
+        self.assertTrue(del2.update_indel(snp2))
+        snp3 = snp.Snp('\t'.join(['150', '.', 'A', '50', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # del from ref
+        snp4 = snp.Snp('\t'.join(['150', '.', 'C', '51', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # del from ref
+        snp5 = snp.Snp('\t'.join(['150', '.', 'G', '52', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # del from ref
+        ins1 = variant.Variant(snp3)
+        ins2 = variant.Variant(snp3)
+        self.assertTrue(ins2.update_indel(snp4))
+        self.assertTrue(ins2.update_indel(snp5))
+
+        tests = [
+            (99, [], (100, False)),
+            (100, [], (99, False)),
+            (199, [], (0, False)),
+            (119, [], (80, False)),
+            (119, [del1], (80, False)),
+            (149, [], (50, False)),
+            (149, [del1], (51, False)),
+            (149, [del2], (52, False)),
+            (159, [], (40, False)),
+            (159, [ins1], (39, False)),
+            (159, [ins2], (37, False)),
+            (159, [del1, ins1], (40, False)),
+            (159, [del1, ins2], (38, False)),
+            (159, [del2, ins1], (41, False)),
+            (159, [del2, ins2], (39, False)),
+            (139, [del1], (39, True)),
+            (139, [snp0], (60, False)),
+            (149, [ins1], (49, True)),
+        ]
+
+        for ref_coord, variant_list, expected in tests:
+            got = aln.qry_coords_from_ref_coord(ref_coord, variant_list)
+            self.assertEqual(expected, got)
+            # if we reverse the direction of hit in query and reference, should get the same answer
+            aln.qry_start, aln.qry_end = aln.qry_end, aln.qry_start
+            aln.ref_start, aln.ref_end = aln.ref_end, aln.ref_start
+            got = aln.qry_coords_from_ref_coord(ref_coord, variant_list)
+            self.assertEqual(expected, got)
+            aln.qry_start, aln.qry_end = aln.qry_end, aln.qry_start
+            aln.ref_start, aln.ref_end = aln.ref_end, aln.ref_start
+
 
