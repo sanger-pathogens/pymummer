@@ -143,6 +143,8 @@ class TestNucmer(unittest.TestCase):
     def test_qry_coords_from_ref_coord_test_same_strand(self):
         '''Test qry_coords_from_ref_coord on same strand'''
         aln = alignment.Alignment('\t'.join(['100', '200', '1', '101', '100', '100', '100.00', '300', '300', '1', '1', 'ref', 'qry']))
+        snp0 = snp.Snp('\t'.join(['140', 'A', 'T', '40', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # snp
+        snp0 = variant.Variant(snp0)
         snp1 = snp.Snp('\t'.join(['140', 'A', '.', '40', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # del from qry
         snp2 = snp.Snp('\t'.join(['141', 'C', '.', '40', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # del from qry
         del1 = variant.Variant(snp1)
@@ -172,6 +174,7 @@ class TestNucmer(unittest.TestCase):
             (159, [del2, ins1], (59, False)),
             (159, [del2, ins2], (61, False)),
             (139, [del1], (39, True)),
+            (139, [snp0], (40, False)),
             (149, [ins1], (49, True)),
         ]
 
@@ -190,6 +193,8 @@ class TestNucmer(unittest.TestCase):
     def test_qry_coords_from_ref_coord_test_different_strand(self):
         '''Test qry_coords_from_ref_coord on different strand'''
         aln = alignment.Alignment('\t'.join(['100', '200', '101', '1', '100', '100', '100.00', '300', '300', '1', '1', 'ref', 'qry']))
+        snp0 = snp.Snp('\t'.join(['140', 'A', 'T', '40', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # snp
+        snp0 = variant.Variant(snp0)
         snp1 = snp.Snp('\t'.join(['140', 'A', '.', '40', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # del from qry
         snp2 = snp.Snp('\t'.join(['141', 'C', '.', '40', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # del from qry
         del1 = variant.Variant(snp1)
@@ -220,6 +225,7 @@ class TestNucmer(unittest.TestCase):
             (159, [del2, ins1], (41, False)),
             (159, [del2, ins2], (39, False)),
             (139, [del1], (39, True)),
+            (139, [snp0], (60, False)),
             (149, [ins1], (49, True)),
         ]
 

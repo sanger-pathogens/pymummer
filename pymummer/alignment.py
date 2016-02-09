@@ -149,6 +149,8 @@ class Alignment:
         indel_variant_indexes = []
 
         for i in range(len(variant_list)):
+            if variant_list[i].var_type not in {variant.INS, variant.DEL}:
+                continue
             if variant_list[i].ref_start <= ref_coord <= variant_list[i].ref_end:
                 return variant_list[i].qry_start, True
             elif variant_list[i].ref_start < ref_coord:
