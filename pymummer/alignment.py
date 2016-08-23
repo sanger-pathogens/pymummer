@@ -169,3 +169,40 @@ class Alignment:
             return min(self.qry_start, self.qry_end) + distance, False
         else:
             return max(self.qry_start, self.qry_end) - distance, False
+
+
+    def ref_coords_from_qry_coord(self, qry_coord, variant_list):
+        '''Given a qryerence position and a list of variants ([variant.Variant]),
+           works out the position in the ref sequence, accounting for indels.
+           Returns a tuple: (position, True|False), where second element is whether
+           or not the qry_coord lies in an indel. If it is, then
+           returns the corresponding start position
+           of the indel in the ref'''
+        print(self.qry_coords(), qry_coord)
+        if self.qry_coords().distance_to_point(qry_coord) > 0:
+            raise Error('Cannot get ref coord in ref_coords_from_qry_coord because given qry_coord ' + str(qry_coord) + ' does not lie in nucmer alignment:\n' + str(self))
+
+        indel_variant_indexes = []
+
+        for i in range(len(variant_list)):
+            if variant_list[i].var_type not in {variant.INS, variant.DEL}:
+                continue
+            if variant_list[i].qry_start <= qry_coord <= variant_list[i].qry_end:
+                return variant_list[i].ref_start, True
+            elif variant_list[i].qry_start < qry_coord:
+                indel_variant_indexes.append(i)
+
+        distance = qry_coord - min(self.qry_start, self.qry_end)
+
+        for i in indel_variant_indexes:
+            if variant_list[i].var_type == variant.DEL:
+                distance += len(variant_list[i].ref_base)
+            else:
+                assert variant_list[i].var_type == variant.INS
+                distance -= len(variant_list[i].qry_base)
+
+        if self.on_same_strand():
+            return min(self.ref_start, self.ref_end) + distance, False
+        else:
+            return max(self.ref_start, self.ref_end) - distance, False
+
