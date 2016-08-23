@@ -178,7 +178,6 @@ class Alignment:
            or not the qry_coord lies in an indel. If it is, then
            returns the corresponding start position
            of the indel in the ref'''
-        print(self.qry_coords(), qry_coord)
         if self.qry_coords().distance_to_point(qry_coord) > 0:
             raise Error('Cannot get ref coord in ref_coords_from_qry_coord because given qry_coord ' + str(qry_coord) + ' does not lie in nucmer alignment:\n' + str(self))
 
