@@ -16,6 +16,7 @@ class TestRunner(unittest.TestCase):
             [nucmer.Runner('ref', 'qry', 'outfile', diagdiff=11), 'nucmer -p pre -D 11 ref qry'],
             [nucmer.Runner('ref', 'qry', 'outfile', diagdiff=11, promer=True), 'promer -p pre ref qry'],
             [nucmer.Runner('ref', 'qry', 'outfile', maxmatch=True), 'nucmer -p pre --maxmatch ref qry'],
+            [nucmer.Runner('ref', 'qry', 'outfile', mincluster=42), 'nucmer -p pre -c 42 ref qry'],
             [nucmer.Runner('ref', 'qry', 'outfile', simplify=False), 'nucmer -p pre --nosimplify ref qry'],
             [nucmer.Runner('ref', 'qry', 'outfile', promer=True), 'promer -p pre ref qry'],
             [nucmer.Runner('ref', 'qry', 'outfile', promer=True, breaklen=42), 'promer -p pre -b 42 ref qry'],
@@ -37,7 +38,7 @@ class TestRunner(unittest.TestCase):
 
         for l in tests:
             self.assertEqual(l[0]._delta_filter_command('infile', 'outfile'), l[1])
-        
+
 
     def test_show_coords_command(self):
         '''test _show_coords_command'''
@@ -93,5 +94,5 @@ class TestRunner(unittest.TestCase):
         self.assertTrue(filecmp.cmp(tmp_out + '.snps', expected + '.snps', shallow=False))
         os.unlink(tmp_out)
         os.unlink(tmp_out + '.snps')
-        
+
 

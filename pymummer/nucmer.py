@@ -20,6 +20,7 @@ class Runner:
       coords_header=True,
       diagdiff=None,
       maxmatch=False,
+      mincluster=None,
       simplify=True,
       show_snps=False,
       snps_header=True,
@@ -35,12 +36,13 @@ class Runner:
         self.diagdiff = diagdiff
         self.coords_header = coords_header
         self.maxmatch = maxmatch
+        self.mincluster = mincluster
         self.simplify = simplify
         self.show_snps = show_snps
         self.snps_header = snps_header
         self.verbose = verbose
         self.use_promer = promer
-    
+
 
 
     def _nucmer_command(self, ref, qry, outprefix):
@@ -49,7 +51,7 @@ class Runner:
             command = 'promer'
         else:
             command = 'nucmer'
-  
+
         command += ' -p ' + outprefix
 
         if self.breaklen is not None:
@@ -60,7 +62,10 @@ class Runner:
 
         if self.maxmatch:
             command += ' --maxmatch'
-            
+
+        if self.mincluster is not None:
+            command += ' -c ' + str(self.mincluster)
+
         if not self.simplify and not self.use_promer:
         	command += ' --nosimplify'
 
@@ -79,7 +84,7 @@ class Runner:
             command += ' -l ' + str(self.min_length)
 
         return command + ' ' + infile + ' > ' + outfile
-        
+
 
     def _show_coords_command(self, infile, outfile):
         '''Construct show-coords command'''
@@ -109,7 +114,7 @@ class Runner:
         if self.show_snps:
             print(self._show_snps_command('p.delta.filter', outfile + '.snps'), file=f)
         pyfastaq.utils.close(f)
-    
+
 
     def run(self):
         '''
@@ -125,7 +130,7 @@ class Runner:
         original_dir = os.getcwd()
         os.chdir(tmpdir)
         script = 'run_nucmer.sh'
-        self._write_script(script, ref, qry, outfile) 
+        self._write_script(script, ref, qry, outfile)
         syscall.run('bash ' + script, verbose=self.verbose)
         os.chdir(original_dir)
         shutil.rmtree(tmpdir)
