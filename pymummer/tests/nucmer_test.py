@@ -55,11 +55,12 @@ class TestRunner(unittest.TestCase):
         '''test _show_snps_command'''
         tests = [
             [nucmer.Runner('ref', 'qry', 'outfile', snps_header=False), 'show-snps -TClr -H infile > outfile'],
-            [nucmer.Runner('ref', 'qry', 'outfile'), 'show-snps -TClr infile > outfile']
+            [nucmer.Runner('ref', 'qry', 'outfile'), 'show-snps -TClr infile > outfile'],
+            [nucmer.Runner('ref', 'qry', 'outfile', show_snps_C=False), 'show-snps -Tlr infile > outfile']
         ]
 
-        for l in tests:
-            self.assertEqual(l[0]._show_snps_command('infile', 'outfile'), l[1])
+        for nuc_obj, expected in tests:
+            self.assertEqual(nuc_obj._show_snps_command('infile', 'outfile'), expected)
 
 
     def test_write_script_no_snps(self):
