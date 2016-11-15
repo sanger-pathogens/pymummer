@@ -26,6 +26,7 @@ class Runner:
       snps_header=True,
       verbose=False,
       promer=False,
+      show_snps_C=True,
    ):
         self.qry = query
         self.ref = ref
@@ -42,7 +43,7 @@ class Runner:
         self.snps_header = snps_header
         self.verbose = verbose
         self.use_promer = promer
-
+        self.show_snps_C = show_snps_C
 
 
     def _nucmer_command(self, ref, qry, outprefix):
@@ -97,7 +98,7 @@ class Runner:
 
 
     def _show_snps_command(self, infile, outfile):
-        command = 'show-snps -TClr'
+        command = 'show-snps -T' + ('C' if self.show_snps_C else '') + 'lr'
 
         if not self.snps_header:
             command += ' -H'
