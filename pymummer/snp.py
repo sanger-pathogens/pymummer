@@ -3,18 +3,23 @@ class Error (Exception): pass
 
 class Snp:
     def __init__(self, line):
+        # Without the -C option to show-snps, looks like this:
         #[P1] [SUB] [SUB]  [P2] [BUFF] [DIST] [LEN R] [LEN Q] [FRM]   [TAGS]
         #187  A     C      269  187    187    654     853     1       1   ref_name  qry_name
+
+        # With the -C option to show-snps, looks like this:
+        #[P1] [SUB] [SUB] [P2] [BUFF] [DIST] [R] [Q] [LEN R] [LEN Q] [FRM] [TAGS]
+        #187  A     C     269  187    187    0   0   654     853     1     1   ref_name  qry_name
         try:
             l = line.rstrip().split('\t')
             self.ref_pos = int(l[0]) - 1
             self.ref_base = l[1]
             self.qry_base = l[2]
             self.qry_pos = int(l[3]) - 1
-            self.ref_length = int(l[6])
-            self.qry_length = int(l[7])
-            self.ref_name = l[10]
-            self.qry_name = l[11]
+            self.ref_length = int(l[-6])
+            self.qry_length = int(l[-5])
+            self.ref_name = l[-2]
+            self.qry_name = l[-1]
         except:
             raise Error('Error constructing pymummer.snp.Snp from mummer show-snps output at this line:\n' + line)
 
