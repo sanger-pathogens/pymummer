@@ -130,6 +130,22 @@ class TestNucmer(unittest.TestCase):
         self.assertEqual(expected, a.to_msp_crunch())
 
 
+    def test_intersects_variant(self):
+        'Test intersects_variant'''
+        snp0 = snp.Snp('100\tA\t.\t600\t75\t77\t1\t0\t606\t1700\t1\t1\tref\tqry') #100 in ref, 600 in qry
+        indel = variant.Variant(snp0)
+
+        aln1 = alignment.Alignment('100\t500\t600\t1000\t501\t501\t100.00\t600\t1700\t1\t1\tref\tqry')
+        aln2 = alignment.Alignment('101\t500\t600\t1000\t501\t501\t100.00\t600\t1700\t1\t1\tref\tqry')
+        aln3 = alignment.Alignment('100\t500\t601\t1000\t501\t501\t100.00\t600\t1700\t1\t1\tref\tqry')
+        aln4 = alignment.Alignment('101\t500\t601\t1000\t501\t501\t100.00\t600\t1700\t1\t1\tref\tqry')
+
+        self.assertTrue(aln1.intersects_variant(indel))
+        self.assertFalse(aln2.intersects_variant(indel))
+        self.assertFalse(aln3.intersects_variant(indel))
+        self.assertFalse(aln4.intersects_variant(indel))
+
+
     def test_qry_coords_from_ref_coord_test_bad_ref_coord(self):
         '''Test qry_coords_from_ref_coord with bad ref coords'''
         aln = alignment.Alignment('\t'.join(['100', '200', '1', '100', '100', '100', '100.00', '300', '300', '1', '1', 'ref', 'qry']))

@@ -136,6 +136,14 @@ class Alignment:
         ])
 
 
+    def intersects_variant(self, var):
+        var_ref_coords = sorted([var.ref_start, var.ref_end])
+        var_ref_coords = pyfastaq.intervals.Interval(var_ref_coords[0], var_ref_coords[1])
+        var_qry_coords = sorted([var.qry_start, var.qry_end])
+        var_qry_coords = pyfastaq.intervals.Interval(var_qry_coords[0], var_qry_coords[1])
+        return var_ref_coords.intersects(self.ref_coords()) and var_qry_coords.intersects(self.qry_coords())
+
+
     def qry_coords_from_ref_coord(self, ref_coord, variant_list):
         '''Given a reference position and a list of variants ([variant.Variant]),
            works out the position in the query sequence, accounting for indels.
