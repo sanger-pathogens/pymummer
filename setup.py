@@ -26,7 +26,7 @@ if not found_all_progs:
 
 setup(
     name='pymummer',
-    version='0.10.1',
+    version='0.10.2',
     description='Wrapper for MUMmer',
     packages = find_packages(),
     author='Martin Hunt, Nishadi De Silva',

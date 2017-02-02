@@ -130,6 +130,22 @@ class TestNucmer(unittest.TestCase):
         self.assertEqual(expected, a.to_msp_crunch())
 
 
+    def test_intersects_variant(self):
+        'Test intersects_variant'''
+        snp0 = snp.Snp('100\tA\t.\t600\t75\t77\t1\t0\t606\t1700\t1\t1\tref\tqry') #100 in ref, 600 in qry
+        indel = variant.Variant(snp0)
+
+        aln1 = alignment.Alignment('100\t500\t600\t1000\t501\t501\t100.00\t600\t1700\t1\t1\tref\tqry')
+        aln2 = alignment.Alignment('101\t500\t600\t1000\t501\t501\t100.00\t600\t1700\t1\t1\tref\tqry')
+        aln3 = alignment.Alignment('100\t500\t601\t1000\t501\t501\t100.00\t600\t1700\t1\t1\tref\tqry')
+        aln4 = alignment.Alignment('101\t500\t601\t1000\t501\t501\t100.00\t600\t1700\t1\t1\tref\tqry')
+
+        self.assertTrue(aln1.intersects_variant(indel))
+        self.assertFalse(aln2.intersects_variant(indel))
+        self.assertFalse(aln3.intersects_variant(indel))
+        self.assertFalse(aln4.intersects_variant(indel))
+
+
     def test_qry_coords_from_ref_coord_test_bad_ref_coord(self):
         '''Test qry_coords_from_ref_coord with bad ref coords'''
         aln = alignment.Alignment('\t'.join(['100', '200', '1', '100', '100', '100', '100.00', '300', '300', '1', '1', 'ref', 'qry']))
@@ -241,6 +257,19 @@ class TestNucmer(unittest.TestCase):
             aln.ref_start, aln.ref_end = aln.ref_end, aln.ref_start
 
 
+    def test_qry_coords_from_ref_coord_when_variant_not_in_nucmer_match(self):
+        '''Test ref_coords_from_qry_coord when variant not in nucmer match'''
+        aln = alignment.Alignment('1\t606\t596\t1201\t606\t606\t100.00\t606\t1700\t1\t1\tref\tqry')
+        snp0 = snp.Snp('127\tA\t.\t77\t75\t77\t1\t0\t606\t1700\t1\t1\tref\tqry')
+        indel = variant.Variant(snp0)
+        self.assertEqual((595, False), aln.qry_coords_from_ref_coord(0, []))
+        self.assertEqual((595, False), aln.qry_coords_from_ref_coord(0, [indel]))
+        self.assertEqual((995, False), aln.qry_coords_from_ref_coord(400, []))
+        self.assertEqual((995, False), aln.qry_coords_from_ref_coord(400, [indel]))
+        self.assertEqual((1200, False), aln.qry_coords_from_ref_coord(605, []))
+        self.assertEqual((1200, False), aln.qry_coords_from_ref_coord(605, [indel]))
+
+
     def test_ref_coords_from_qry_coord_test_same_strand(self):
         '''Test ref_coords_from_qry_coord on same strand'''
         aln = alignment.Alignment('\t'.join(['1', '101', '100', '200', '100', '100', '100.00', '300', '300', '1', '1', 'ref', 'qry']))
@@ -290,3 +319,15 @@ class TestNucmer(unittest.TestCase):
             aln.ref_start, aln.ref_end = aln.ref_end, aln.ref_start
             aln.qry_start, aln.qry_end = aln.qry_end, aln.qry_start
 
+
+    def test_ref_coords_from_qry_coord_when_variant_not_in_nucmer_match(self):
+        '''Test ref_coords_from_qry_coord when variant not in nucmer match'''
+        aln = alignment.Alignment('1\t606\t596\t1201\t606\t606\t100.00\t606\t1700\t1\t1\tref\tqry')
+        snp0 = snp.Snp('127\tA\t.\t77\t75\t77\t1\t0\t606\t1700\t1\t1\tref\tqry')
+        indel = variant.Variant(snp0)
+        self.assertEqual((0, False), aln.ref_coords_from_qry_coord(595, []))
+        self.assertEqual((0, False), aln.ref_coords_from_qry_coord(595, [indel]))
+        self.assertEqual((400, False), aln.ref_coords_from_qry_coord(995, []))
+        self.assertEqual((400, False), aln.ref_coords_from_qry_coord(995, [indel]))
+        self.assertEqual((605, False), aln.ref_coords_from_qry_coord(1200, []))
+        self.assertEqual((605, False), aln.ref_coords_from_qry_coord(1200, [indel]))
