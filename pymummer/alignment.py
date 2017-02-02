@@ -159,6 +159,8 @@ class Alignment:
         for i in range(len(variant_list)):
             if variant_list[i].var_type not in {variant.INS, variant.DEL}:
                 continue
+            if not self.intersects_variant(variant_list[i]):
+                continue
             if variant_list[i].ref_start <= ref_coord <= variant_list[i].ref_end:
                 return variant_list[i].qry_start, True
             elif variant_list[i].ref_start < ref_coord:
@@ -193,6 +195,8 @@ class Alignment:
 
         for i in range(len(variant_list)):
             if variant_list[i].var_type not in {variant.INS, variant.DEL}:
+                continue
+            if not self.intersects_variant(variant_list[i]):
                 continue
             if variant_list[i].qry_start <= qry_coord <= variant_list[i].qry_end:
                 return variant_list[i].ref_start, True
