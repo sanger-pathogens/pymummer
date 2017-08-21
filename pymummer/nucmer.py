@@ -19,6 +19,8 @@ class Runner:
       breaklen=None,
       coords_header=True,
       diagdiff=None,
+      diagfactor=None,
+      maxgap=None,
       maxmatch=False,
       mincluster=None,
       simplify=True,
@@ -35,7 +37,9 @@ class Runner:
         self.min_length = min_length
         self.breaklen = breaklen
         self.diagdiff = diagdiff
+        self.diagfactor = diagfactor
         self.coords_header = coords_header
+        self.maxgap = maxgap
         self.maxmatch = maxmatch
         self.mincluster = mincluster
         self.simplify = simplify
@@ -61,6 +65,12 @@ class Runner:
         if self.diagdiff is not None and not self.use_promer:
             command += ' -D ' + str(self.diagdiff)
 
+        if self.diagfactor:
+            command += ' -d ' + str(self.diagfactor)
+
+        if self.maxgap:
+            command += ' -g ' + str(self.maxgap)
+
         if self.maxmatch:
             command += ' --maxmatch'
 
@@ -71,7 +81,6 @@ class Runner:
         	command += ' --nosimplify'
 
         return command + ' ' + ref + ' ' + qry
-
 
 
     def _delta_filter_command(self, infile, outfile):
