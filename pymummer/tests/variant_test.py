@@ -25,33 +25,33 @@ class TestVariant(unittest.TestCase):
     def test_update_indel_no_change(self):
         '''Test update_indel does nothing in the right cases'''
         initial_vars = [
-            snp.Snp('\t'.join(['42', 'A', 'C', '100', 'x', 'x', '300', '400', 'x', 'x', 'ref', 'qry'])),
-            snp.Snp('\t'.join(['42', 'A', 'C', '100', 'x', 'x', '300', '400', 'x', 'x', 'ref', 'qry'])),
-            snp.Snp('\t'.join(['42', 'A', '.', '100', 'x', 'x', '300', '400', 'x', 'x', 'ref', 'qry'])),
-            snp.Snp('\t'.join(['42', 'A', '.', '100', 'x', 'x', '300', '400', 'x', 'x', 'ref', 'qry'])),
-            snp.Snp('\t'.join(['42', 'A', '.', '100', 'x', 'x', '300', '400', 'x', 'x', 'ref', 'qry'])),
-            snp.Snp('\t'.join(['42', 'A', '.', '100', 'x', 'x', '300', '400', 'x', 'x', 'ref', 'qry'])),
-            snp.Snp('\t'.join(['42', 'A', '.', '100', 'x', 'x', '300', '400', 'x', 'x', 'ref', 'qry'])),
-            snp.Snp('\t'.join(['42', '.', 'A', '100', 'x', 'x', '300', '400', 'x', 'x', 'ref', 'qry'])),
-            snp.Snp('\t'.join(['42', '.', 'A', '100', 'x', 'x', '300', '400', 'x', 'x', 'ref', 'qry'])),
-            snp.Snp('\t'.join(['42', '.', 'A', '100', 'x', 'x', '300', '400', 'x', 'x', 'ref', 'qry'])),
-            snp.Snp('\t'.join(['42', '.', 'A', '100', 'x', 'x', '300', '400', 'x', 'x', 'ref', 'qry'])),
-            snp.Snp('\t'.join(['42', '.', 'A', '100', 'x', 'x', '300', '400', 'x', 'x', 'ref', 'qry'])),
+            snp.Snp('\t'.join(['42', 'A', 'C', '100', 'x', 'x', '300', '400', 'x', '1', 'ref', 'qry'])),
+            snp.Snp('\t'.join(['42', 'A', 'C', '100', 'x', 'x', '300', '400', 'x', '1', 'ref', 'qry'])),
+            snp.Snp('\t'.join(['42', 'A', '.', '100', 'x', 'x', '300', '400', 'x', '1', 'ref', 'qry'])),
+            snp.Snp('\t'.join(['42', 'A', '.', '100', 'x', 'x', '300', '400', 'x', '1', 'ref', 'qry'])),
+            snp.Snp('\t'.join(['42', 'A', '.', '100', 'x', 'x', '300', '400', 'x', '1', 'ref', 'qry'])),
+            snp.Snp('\t'.join(['42', 'A', '.', '100', 'x', 'x', '300', '400', 'x', '1', 'ref', 'qry'])),
+            snp.Snp('\t'.join(['42', 'A', '.', '100', 'x', 'x', '300', '400', 'x', '1', 'ref', 'qry'])),
+            snp.Snp('\t'.join(['42', '.', 'A', '100', 'x', 'x', '300', '400', 'x', '1', 'ref', 'qry'])),
+            snp.Snp('\t'.join(['42', '.', 'A', '100', 'x', 'x', '300', '400', 'x', '1', 'ref', 'qry'])),
+            snp.Snp('\t'.join(['42', '.', 'A', '100', 'x', 'x', '300', '400', 'x', '1', 'ref', 'qry'])),
+            snp.Snp('\t'.join(['42', '.', 'A', '100', 'x', 'x', '300', '400', 'x', '1', 'ref', 'qry'])),
+            snp.Snp('\t'.join(['42', '.', 'A', '100', 'x', 'x', '300', '400', 'x', '1', 'ref', 'qry'])),
         ]
 
         to_add = [
-            snp.Snp('\t'.join(['142', 'A', '.', '1000', 'x', 'x', '2000', '3000', 'x', 'x', 'ref', 'qry'])),
-            snp.Snp('\t'.join(['142', '.', 'A', '1000', 'x', 'x', '2000', '3000', 'x', 'x', 'ref', 'qry'])),
-            snp.Snp('\t'.join(['43', 'A', '.', '100', 'x', 'x', '300', '400', 'x', 'x', 'ref2', 'qry'])),
-            snp.Snp('\t'.join(['43', 'A', '.', '100', 'x', 'x', '300', '400', 'x', 'x', 'ref', 'qry2'])),
-            snp.Snp('\t'.join(['44', 'A', '.', '100', 'x', 'x', '300', '400', 'x', 'x', 'ref', 'qry'])),
-            snp.Snp('\t'.join(['42', 'A', '.', '100', 'x', 'x', '300', '400', 'x', 'x', 'ref', 'qry'])),
-            snp.Snp('\t'.join(['43', '.', 'A', '100', 'x', 'x', '300', '400', 'x', 'x', 'ref', 'qry'])),
-            snp.Snp('\t'.join(['43', '.', 'A', '100', 'x', 'x', '300', '400', 'x', 'x', 'ref2', 'qry'])),
-            snp.Snp('\t'.join(['43', '.', 'A', '100', 'x', 'x', '300', '400', 'x', 'x', 'ref', 'qry2'])),
-            snp.Snp('\t'.join(['44', '.', 'A', '100', 'x', 'x', '300', '400', 'x', 'x', 'ref', 'qry'])),
-            snp.Snp('\t'.join(['42', '.', 'A', '100', 'x', 'x', '300', '400', 'x', 'x', 'ref', 'qry'])),
-            snp.Snp('\t'.join(['42', 'A', '.', '100', 'x', 'x', '300', '400', 'x', 'x', 'ref', 'qry'])),
+            snp.Snp('\t'.join(['142', 'A', '.', '1000', 'x', 'x', '2000', '3000', 'x', '1', 'ref', 'qry'])),
+            snp.Snp('\t'.join(['142', '.', 'A', '1000', 'x', 'x', '2000', '3000', 'x', '1', 'ref', 'qry'])),
+            snp.Snp('\t'.join(['43', 'A', '.', '100', 'x', 'x', '300', '400', 'x', '1', 'ref2', 'qry'])),
+            snp.Snp('\t'.join(['43', 'A', '.', '100', 'x', 'x', '300', '400', 'x', '1', 'ref', 'qry2'])),
+            snp.Snp('\t'.join(['44', 'A', '.', '100', 'x', 'x', '300', '400', 'x', '1', 'ref', 'qry'])),
+            snp.Snp('\t'.join(['42', 'A', '.', '100', 'x', 'x', '300', '400', 'x', '1', 'ref', 'qry'])),
+            snp.Snp('\t'.join(['43', '.', 'A', '100', 'x', 'x', '300', '400', 'x', '1', 'ref', 'qry'])),
+            snp.Snp('\t'.join(['43', '.', 'A', '100', 'x', 'x', '300', '400', 'x', '1', 'ref2', 'qry'])),
+            snp.Snp('\t'.join(['43', '.', 'A', '100', 'x', 'x', '300', '400', 'x', '1', 'ref', 'qry2'])),
+            snp.Snp('\t'.join(['44', '.', 'A', '100', 'x', 'x', '300', '400', 'x', '1', 'ref', 'qry'])),
+            snp.Snp('\t'.join(['42', '.', 'A', '100', 'x', 'x', '300', '400', 'x', '1', 'ref', 'qry'])),
+            snp.Snp('\t'.join(['42', 'A', '.', '100', 'x', 'x', '300', '400', 'x', '1', 'ref', 'qry'])),
         ]
 
         assert len(initial_vars) == len(to_add)
@@ -64,8 +64,8 @@ class TestVariant(unittest.TestCase):
 
     def test_update_indel_insertion(self):
         '''Test update_indel extends insertions correctly'''
-        insertion = variant.Variant(snp.Snp('\t'.join(['42', '.', 'A', '100', 'x', 'x', '300', '400', 'x', 'x', 'ref', 'qry'])))
-        to_add = snp.Snp('\t'.join(['42', '.', 'C', '101', 'x', 'x', '300', '400', 'x', 'x', 'ref', 'qry']))
+        insertion = variant.Variant(snp.Snp('\t'.join(['42', '.', 'A', '100', 'x', 'x', '300', '400', 'x', '1', 'ref', 'qry'])))
+        to_add = snp.Snp('\t'.join(['42', '.', 'C', '101', 'x', 'x', '300', '400', 'x', '1', 'ref', 'qry']))
         expected = copy.copy(insertion)
         # coords stored zero-based, so subtract 1 from the real expected coords
         expected.ref_start = 41
@@ -84,8 +84,8 @@ class TestVariant(unittest.TestCase):
 
     def test_update_indel_deletion(self):
         '''Test update_indel extends deletions correctly'''
-        deletion = variant.Variant(snp.Snp('\t'.join(['42', 'A', '.', '100', 'x', 'x', '300', '400', 'x', 'x', 'ref', 'qry'])))
-        to_add = snp.Snp('\t'.join(['43', 'C', '.', '100', 'x', 'x', '300', '400', 'x', 'x', 'ref', 'qry']))
+        deletion = variant.Variant(snp.Snp('\t'.join(['42', 'A', '.', '100', 'x', 'x', '300', '400', 'x', '1', 'ref', 'qry'])))
+        to_add = snp.Snp('\t'.join(['43', 'C', '.', '100', 'x', 'x', '300', '400', 'x', '1', 'ref', 'qry']))
         expected = copy.copy(deletion)
         # coords stored zero-based, so subtract 1 from the real expected coords
         expected.ref_start = 41

@@ -159,16 +159,16 @@ class TestNucmer(unittest.TestCase):
     def test_qry_coords_from_ref_coord_test_same_strand(self):
         '''Test qry_coords_from_ref_coord on same strand'''
         aln = alignment.Alignment('\t'.join(['100', '200', '1', '101', '100', '100', '100.00', '300', '300', '1', '1', 'ref', 'qry']))
-        snp0 = snp.Snp('\t'.join(['140', 'A', 'T', '40', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # snp
+        snp0 = snp.Snp('\t'.join(['140', 'A', 'T', '40', 'x', 'x', '300', '300', 'x', '1', 'ref', 'qry'])) # snp
         snp0 = variant.Variant(snp0)
-        snp1 = snp.Snp('\t'.join(['140', 'A', '.', '40', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # del from qry
-        snp2 = snp.Snp('\t'.join(['141', 'C', '.', '40', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # del from qry
+        snp1 = snp.Snp('\t'.join(['140', 'A', '.', '40', 'x', 'x', '300', '300', 'x', '1', 'ref', 'qry'])) # del from qry
+        snp2 = snp.Snp('\t'.join(['141', 'C', '.', '40', 'x', 'x', '300', '300', 'x', '1', 'ref', 'qry'])) # del from qry
         del1 = variant.Variant(snp1)
         del2 = variant.Variant(snp1)
         self.assertTrue(del2.update_indel(snp2))
-        snp3 = snp.Snp('\t'.join(['150', '.', 'A', '50', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # del from ref
-        snp4 = snp.Snp('\t'.join(['150', '.', 'C', '51', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # del from ref
-        snp5 = snp.Snp('\t'.join(['150', '.', 'G', '52', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # del from ref
+        snp3 = snp.Snp('\t'.join(['150', '.', 'A', '50', 'x', 'x', '300', '300', 'x', '1', 'ref', 'qry'])) # del from ref
+        snp4 = snp.Snp('\t'.join(['150', '.', 'C', '51', 'x', 'x', '300', '300', 'x', '1', 'ref', 'qry'])) # del from ref
+        snp5 = snp.Snp('\t'.join(['150', '.', 'G', '52', 'x', 'x', '300', '300', 'x', '1', 'ref', 'qry'])) # del from ref
         ins1 = variant.Variant(snp3)
         ins2 = variant.Variant(snp3)
         self.assertTrue(ins2.update_indel(snp4))
@@ -209,16 +209,16 @@ class TestNucmer(unittest.TestCase):
     def test_qry_coords_from_ref_coord_test_different_strand(self):
         '''Test qry_coords_from_ref_coord on different strand'''
         aln = alignment.Alignment('\t'.join(['100', '200', '101', '1', '100', '100', '100.00', '300', '300', '1', '1', 'ref', 'qry']))
-        snp0 = snp.Snp('\t'.join(['140', 'A', 'T', '40', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # snp
+        snp0 = snp.Snp('\t'.join(['140', 'A', 'T', '40', 'x', 'x', '300', '300', 'x', '1', 'ref', 'qry'])) # snp
         snp0 = variant.Variant(snp0)
-        snp1 = snp.Snp('\t'.join(['140', 'A', '.', '40', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # del from qry
-        snp2 = snp.Snp('\t'.join(['141', 'C', '.', '40', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # del from qry
+        snp1 = snp.Snp('\t'.join(['140', 'A', '.', '40', 'x', 'x', '300', '300', 'x', '1', 'ref', 'qry'])) # del from qry
+        snp2 = snp.Snp('\t'.join(['141', 'C', '.', '40', 'x', 'x', '300', '300', 'x', '1', 'ref', 'qry'])) # del from qry
         del1 = variant.Variant(snp1)
         del2 = variant.Variant(snp1)
         self.assertTrue(del2.update_indel(snp2))
-        snp3 = snp.Snp('\t'.join(['150', '.', 'A', '50', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # del from ref
-        snp4 = snp.Snp('\t'.join(['150', '.', 'C', '51', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # del from ref
-        snp5 = snp.Snp('\t'.join(['150', '.', 'G', '52', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # del from ref
+        snp3 = snp.Snp('\t'.join(['150', '.', 'A', '50', 'x', 'x', '300', '300', 'x', '1', 'ref', 'qry'])) # del from ref
+        snp4 = snp.Snp('\t'.join(['150', '.', 'C', '51', 'x', 'x', '300', '300', 'x', '1', 'ref', 'qry'])) # del from ref
+        snp5 = snp.Snp('\t'.join(['150', '.', 'G', '52', 'x', 'x', '300', '300', 'x', '1', 'ref', 'qry'])) # del from ref
         ins1 = variant.Variant(snp3)
         ins2 = variant.Variant(snp3)
         self.assertTrue(ins2.update_indel(snp4))
@@ -273,16 +273,16 @@ class TestNucmer(unittest.TestCase):
     def test_ref_coords_from_qry_coord_test_same_strand(self):
         '''Test ref_coords_from_qry_coord on same strand'''
         aln = alignment.Alignment('\t'.join(['1', '101', '100', '200', '100', '100', '100.00', '300', '300', '1', '1', 'ref', 'qry']))
-        snp0 = snp.Snp('\t'.join(['40', 'T', 'A', '140', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # snp
+        snp0 = snp.Snp('\t'.join(['40', 'T', 'A', '140', 'x', 'x', '300', '300', 'x', '1', 'ref', 'qry'])) # snp
         snp0 = variant.Variant(snp0)
-        snp1 = snp.Snp('\t'.join(['40', '.', 'A', '140', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # del from ref
-        snp2 = snp.Snp('\t'.join(['40', '.', 'C', '141', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # del from ref
+        snp1 = snp.Snp('\t'.join(['40', '.', 'A', '140', 'x', 'x', '300', '300', 'x', '1', 'ref', 'qry'])) # del from ref
+        snp2 = snp.Snp('\t'.join(['40', '.', 'C', '141', 'x', 'x', '300', '300', 'x', '1', 'ref', 'qry'])) # del from ref
         del1 = variant.Variant(snp1)
         del2 = variant.Variant(snp1)
         self.assertTrue(del2.update_indel(snp2))
-        snp3 = snp.Snp('\t'.join(['50', 'A', '.', '150', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # del from qry
-        snp4 = snp.Snp('\t'.join(['51', 'C', '.', '150', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # del from qry
-        snp5 = snp.Snp('\t'.join(['52', 'G', '.', '150', 'x', 'x', '300', '300', 'x', 'x', 'ref', 'qry'])) # del from qry
+        snp3 = snp.Snp('\t'.join(['50', 'A', '.', '150', 'x', 'x', '300', '300', 'x', '1', 'ref', 'qry'])) # del from qry
+        snp4 = snp.Snp('\t'.join(['51', 'C', '.', '150', 'x', 'x', '300', '300', 'x', '1', 'ref', 'qry'])) # del from qry
+        snp5 = snp.Snp('\t'.join(['52', 'G', '.', '150', 'x', 'x', '300', '300', 'x', '1', 'ref', 'qry'])) # del from qry
         ins1 = variant.Variant(snp3)
         ins2 = variant.Variant(snp3)
         self.assertTrue(ins2.update_indel(snp4))
