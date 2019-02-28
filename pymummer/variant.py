@@ -37,6 +37,7 @@ class Variant:
         self.qry_end = snp.qry_pos
         self.qry_length = snp.qry_length
         self.qry_name = snp.qry_name
+        self.reverse = snp.reverse
 
 
     def __eq__(self, other):
@@ -54,7 +55,8 @@ class Variant:
             str(self.qry_end + 1),
             str(self.qry_length),
             str(self.qry_name),
-            self.qry_base
+            self.qry_base,
+            '-1' if self.reverse else '1',
         ])
 
     def update_indel(self, nucmer_snp):
@@ -63,7 +65,8 @@ class Variant:
         if self.var_type not in [INS, DEL] \
           or self.var_type != new_variant.var_type \
           or self.qry_name != new_variant.qry_name \
-          or self.ref_name != new_variant.ref_name:
+          or self.ref_name != new_variant.ref_name \
+          or self.reverse != new_variant.reverse:
             return False
         if self.var_type == INS \
           and self.ref_start == new_variant.ref_start \
