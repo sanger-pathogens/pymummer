@@ -64,8 +64,8 @@ class TestVariant(unittest.TestCase):
 
     def test_update_indel_insertion(self):
         '''Test update_indel extends insertions correctly'''
-        insertion = variant.Variant(snp.Snp('\t'.join(['42', '.', 'A', '100', 'x', 'x', '300', '400', 'x', '1', 'ref', 'qry'])))
-        to_add = snp.Snp('\t'.join(['42', '.', 'C', '101', 'x', 'x', '300', '400', 'x', '1', 'ref', 'qry']))
+        insertion = variant.Variant(snp.Snp('\t'.join(['42', '.', 'A', '100', 'x', 'x', '300', '400', 'x', '-1', 'ref', 'qry'])))
+        to_add = snp.Snp('\t'.join(['42', '.', 'C', '101', 'x', 'x', '300', '400', 'x', '-1', 'ref', 'qry']))
         expected = copy.copy(insertion)
         # coords stored zero-based, so subtract 1 from the real expected coords
         expected.ref_start = 41
