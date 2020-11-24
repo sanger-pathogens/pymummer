@@ -1,4 +1,7 @@
 language: python
+arch:
+    - amd64
+    - ppc64le
 addons:
   apt:
     packages:
@@ -9,8 +12,12 @@ cache:
   - "build"
   - "$HOME/.cache/pip"
 python:
-  - "3.3"
+# - "3.3"
   - "3.4"
+  - "3.5"
+  - "3.6"
+  - "3.7"
+  - "3.8"
 sudo: false
 install:
   - "source ./install_dependencies.sh"
