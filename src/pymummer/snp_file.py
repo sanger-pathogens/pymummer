@@ -1,11 +1,12 @@
 import pyfastaq
 from pymummer import snp, variant
 
+
 def reader(fname):
     f = pyfastaq.utils.open_file_read(fname)
 
     for line in f:
-        if line.startswith('[') or (not '\t' in line):
+        if line.startswith("[") or (not "\t" in line):
             continue
 
         yield snp.Snp(line)
@@ -21,4 +22,3 @@ def get_all_variants(fname):
             variants.append(variant.Variant(nucmer_snp))
 
     return variants
-
