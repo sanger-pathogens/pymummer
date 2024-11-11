@@ -136,7 +136,7 @@ class Runner:
         qry = os.path.abspath(self.qry)
         ref = os.path.abspath(self.ref)
         outfile = os.path.abspath(self.outfile)
-        tmpdir = tempfile.mkdtemp(prefix='tmp.run_nucmer.', dir=os.getcwd())
+        tmpdir = tempfile.mkdtemp(prefix='tmp.run_nucmer.')
         original_dir = os.getcwd()
         os.chdir(tmpdir)
         script = 'run_nucmer.sh'
