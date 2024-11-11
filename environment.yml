@@ -1,0 +1,11 @@
+name: pymummer
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python 3.12
+  - bioconda::mummer4
+  - "pyfastaq >= 3.10.0"
+  - pip
+  - pip:
+      - hatch
