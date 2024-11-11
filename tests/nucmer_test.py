@@ -3,9 +3,7 @@ import os
 import filecmp
 from pymummer import nucmer
 
-modules_dir = os.path.dirname(os.path.abspath(nucmer.__file__))
-data_dir = os.path.join(modules_dir, 'tests', 'data')
-
+data_dir = "tests/data"
 
 class TestRunner(unittest.TestCase):
     def test_nucmer_command(self):

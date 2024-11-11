@@ -3,8 +3,7 @@ import os
 import filecmp
 from pymummer import coords_file, alignment
 
-modules_dir = os.path.dirname(os.path.abspath(coords_file.__file__))
-data_dir = os.path.join(modules_dir, 'tests', 'data')
+data_dir = "tests/data"
 
 class TestCoordsFile(unittest.TestCase):
     def test_coords_file(self):

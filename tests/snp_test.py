@@ -3,9 +3,7 @@ import os
 from pymummer import snp
 
 
-modules_dir = os.path.dirname(os.path.abspath(snp.__file__))
-data_dir = os.path.join(modules_dir, 'tests', 'data')
-
+data_dir = "tests/data"
 
 class TestSnp(unittest.TestCase):
     def test_str_no_c_option(self):

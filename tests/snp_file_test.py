@@ -2,8 +2,7 @@ import unittest
 import os
 from pymummer import snp_file, snp, variant
 
-modules_dir = os.path.dirname(os.path.abspath(snp_file.__file__))
-data_dir = os.path.join(modules_dir, 'tests', 'data')
+data_dir = "tests/data"
 
 class TestUtils(unittest.TestCase):
     def test_snp_file(self):

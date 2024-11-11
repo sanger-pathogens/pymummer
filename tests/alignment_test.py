@@ -3,8 +3,7 @@ import os
 import pyfastaq
 from pymummer import alignment, snp, variant
 
-modules_dir = os.path.dirname(os.path.abspath(alignment.__file__))
-data_dir = os.path.join(modules_dir, 'tests', 'data')
+data_dir = "tests/data"
 
 class TestNucmer(unittest.TestCase):
     def test_init_nucmer(self):
