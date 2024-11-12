@@ -42,11 +42,12 @@ brew install pymummer
 ```
 pip3 install pymummer
 ```
+
 ### Running the tests
 The test can be run from the top level directory: 
 
 ```
-python setup.py test
+pytest tests
 ```
 
 ## Usage (for developers)
