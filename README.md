@@ -38,15 +38,50 @@ brew tap homebrew/python
 brew install pymummer
 ```
 
-### Using pip
+### Conda
+
+We have provided conda environment recipes in this repo that can be used to create a fresh environment with the required dependencies. After creating a new env you can `pip install` pymummer from pypi or this repo using the commands in the next section.
+
+```bash
+# Create pymummer env 
+conda env create -f environment.yml
+# Activate env
+conda activate pymummer
+# Install pymummer
+pip install pymummer
 ```
+
+If you are using an M-Series Mac (ARM64 processor) you will need to create a mock Intel environment to install Mummer4 from Bioconda.
+
+```bash
+# Apple ARM64 Macs only
+# Create mock Intel env
+conda env create -f env_osx64.yml
+# Activate env
+conda activate pymummer-osx64
+# Install pymummer
+pip install pymummer
+```
+
+### Pip install
+
+Install from PyPi
+
+```bash
 pip3 install pymummer
 ```
+
+Or pip install the latest development version directly from this repo.
+
+```bash
+pip3 install git+https://github.com/sanger-pathogens/pymummer.git
+```
+
 ### Running the tests
 The test can be run from the top level directory: 
 
 ```
-python setup.py test
+pytest tests
 ```
 
 ## Usage (for developers)

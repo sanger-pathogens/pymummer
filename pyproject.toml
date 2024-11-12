@@ -1,0 +1,63 @@
+# Build system configuration
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+# Project metadata
+[project]
+name = "pymummer"
+description = "Wrapper for MUMmer"
+readme="README.md"
+requires-python = ">=3.8"
+license = { text = "GPLv3" }
+authors = [
+    { name = "Martin Hunt", email = "path-help@sanger.ac.uk" },
+    { name = "Nishadi De Silva", email = "path-help@sanger.ac.uk" }
+]
+
+# The classifiers for the project.
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Programming Language :: Python :: 3 :: Only",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)"
+]
+
+# The dependencies required to install the package.
+dependencies = ["pyfastaq >= 3.10.0"]
+
+# Dynamic versioning
+dynamic = ["version"]
+
+# Project URLs
+[project.urls]
+homepage = "https://github.com/sanger-pathogens/pymummer"
+documentation = "https://github.com/sanger-pathogens/pymummer"
+repository = "https://github.com/sanger-pathogens/pymummer"
+
+# Hatch build configuration
+[tool.hatch.build]
+source = "src"
+
+# Exclude files and directories from the build
+exclude = [
+    "environment.yml",
+    "env_osx64.yml",
+]
+
+# Hatch versioning configuration
+[tool.hatch.version]
+source = "vcs"
+
+# Version control system (VCS) versioning
+[tool.hatch.version.vcs]
+tag-pattern = "v*"  # Git tags starting with 'v' will be used for versioning
+fallback-version = "0.0.0"
+
+# Version file location for VCS
+[tool.hatch.build.hooks.vcs]
+version-file = "src/pymummer/_version.py"
+
+# Optional dependencies for testing
+[project.optional-dependencies]
+tests = ["pytest"]

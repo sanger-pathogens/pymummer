@@ -9,9 +9,9 @@ cache:
   - "build"
   - "$HOME/.cache/pip"
 python:
-  - "3.3"
-  - "3.4"
+  - "3.7"
+  - "3.12"
 sudo: false
 install:
-  - "source ./install_dependencies.sh"
-script: "python setup.py test"
+  - "source ./scripts/install_dependencies.sh"
+script: "pip install . && pytest tests"
